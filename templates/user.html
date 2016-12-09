@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+	<script type="text/javascript" src="/static/js/user.js?v=3.1.6"></script>
+	<script type="text/javascript" src="/static/js/test.js?v=3.1.6"></script>
+	<script type="text/javascript" src="/static/js/newpractice.js?v=0.0.3"></script>
+
+	<h1>Create New Account</h1>
+	<br>
+	<form action="" method="POST" id="user_form" name="new_user">
+		<label for="new_username_input">Username: </label><input type="text" name="username" id="new_username_input"><br>
+		<label for="new_firstname_input">Firstname: </label><input type="text" name="firstname" id="new_firstname_input"><br>
+		<label for="new_lastname_input">Lastname: </label><input type="text" name="lastname" id="new_lastname_input"><br>
+		<label for="new_email_input">Email: </label><input type="text" name="email" id="new_email_input"><br required>
+		<label for="new_password1_input">Password: </label><input type="password" name="password1" id="new_password1_input"><br>
+		<label for="new_password2_input">Retype Password: </label><input type="password" name="password2" id="new_password2_input"><br>
+		<input type="submit" name="submit" id="new_submit">
+	</form>
+
+
+
+	<div id="errors_div">
+		
+
+	</div>
+
+
+
+{% endblock %}

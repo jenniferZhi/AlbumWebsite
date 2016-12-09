@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block content %}
+	<script type="text/javascript" src="/static/js/logout.js?v=0.1.0"></script>
+	<script type="text/javascript" src="/static/js/album_pic.js?v=0.0.9"></script>
+	<script type="text/javascript">
+		window.onpopstate = function(event){
+			if (event.state.stateType == "pic")
+				showPic(event.state.stateVariable);
+			else if (event.state.stateType == "album")
+				album(event.state.stateVariable);
+
+
+		}
+	</script>
+
+	<div id="errors_div">
+		
+
+	</div>
+
+	<div id="content">
+		
+
+	</div>
+
+
+
+	<script type="text/javascript">
+		var testString = window.location.href;
+		var pos = testString.indexOf("picid");
+
+
+		if (pos != -1){
+						
+			var picid = testString.substring(pos+6, testString.length);	
+			var pic_url = "/7dzyltg7/p3/pic?picid=" + picid;
+			var pic_title = "Pic Page";
+			var stateObj = { stateVariable : picid, stateType : "pic"};
+
+
+			history.replaceState(stateObj, pic_title, pic_url);
+
+
+
+			showPic(picid);
+
+			
+		}
+		else{
+
+
+			var testString = window.location.href;
+			var pos = testString.indexOf("albumid");
+			var albumid = testString.substring(pos+8, testString.length);
+
+			var album_url = "/7dzyltg7/p3/album?albumid=" + albumid;
+			var album_title = "Album Page";
+			var stateObj = { stateVariable : albumid, stateType : "album"};
+
+			history.replaceState(stateObj, album_title, album_url);
+
+			
+			album(albumid);
+
+
+		}
+
+
+	</script>
+
+
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+
+	<script type="text/javascript" src="/static/js/login.js?v=0.1.0"></script>
+
+	<h1>Log In Page</h1>
+	<br>
+	<form method="POST" id ="login_form" name="user_login">
+		<label for="login_username_input">Username: </label><input type="text" name="username" id="login_username_input">
+		<label for="login_password_input">Password: </label><input type="password" name="password" id="login_password_input"><br>
+		<input type="submit" name="submit" id="login_submit">
+	</form>
+
+
+	<div id="errors_div"></div>
+
+
+
+
+
+{% endblock %}

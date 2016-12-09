@@ -1,0 +1,325 @@
+{% extends "base.html" %}
+{% block content %}
+    <h2>ALBUM</h2>
+    <head>  
+    
+	<script>
+
+
+	function pic_api_get(picid){
+		// stateobj = window.history.state;
+		// window.history.pushState(stateobj,"")
+		// console.log(window.history.state);
+
+		$.ajax({		
+			url: '/xgz9zz9l/p3/api/v1/pic/'+picid,
+			type: 'get',
+			contentType: "application/json; charset=UTF-8",
+			success: function (data) {
+				var caption = data['caption'];
+				$("#pic_{{picid}}_caption").append(caption);
+				if (document.getElementById("pic_caption_input") != null)
+					document.getElementById("pic_caption_input").value = caption;
+				var img = document.createElement("img");
+				img.src = "/static/images/"+data["picid"]+"."+data["format"];
+				// $("#content").append(caption);
+				$("#content").append(img);
+				$("#content").append('<br>');
+				var prev = data['prev'];
+				var next = data['next'];
+				if(prev){
+					var prev_a = document.getElementById('prev_pic'); //or grab it by tagname etc
+					// prev_a.href = "{{url_for('pic.pic_route', picid=prev)}}";
+					var bt = document.createElement("button");
+					bt.innerHTML='Prev Picture';
+					$("#content").append(prev_a);
+					$("#content").append(bt);
+					bt.onclick = function() {
+						stateobj = window.history.state;
+						prev_pic_url = "/xgz9zz9l/p3/pic?picid=" + prev;
+						window.history.replaceState(stateobj,"",prev_pic_url);
+						$("#content").empty();
+						pic_api_get(prev);
+						// $(window.location).attr('href', '/xgz9zz9l/p3/pic?picid='+prev);
+					}
+				}
+				if(next){	
+					var next_a = document.getElementById('next_pic'); //or grab it by tagname etc
+					// next_a.href = "{{url_for('pic.pic_route', picid=next)}}";
+					var bt = document.createElement("button");
+					bt.innerHTML='Next Picture';
+					$("#content").append(next_a);
+					$("#content").append(bt);
+					bt.onclick = function() {
+						stateobj = window.history.state;
+						next_pic_url = "/xgz9zz9l/p3/pic?picid=" + next;
+						window.history.replaceState(stateobj,"",next_pic_url);
+						$("#content").empty();
+						pic_api_get(next);
+						// $(window.location).attr('href', '/xgz9zz9l/p3/pic?picid='+next);
+					}
+				}
+
+				var back = document.createElement("button");
+				back.innerHTML='Back to Album';
+				$("#content").append(back);
+				back.onclick = function() {
+						
+						// history.back();
+						
+						console.log(window.history.state);
+						var albumid = window.history.state['albumid'];
+						console.log(albumid);
+						$(window.location).attr('href', '/xgz9zz9l/p3/album?albumid='+albumid);
+				}
+			},
+
+			error: function(error) {
+
+				var ErrorDict = error['responseText'];
+				var ErrorMessageObj = JSON.parse(ErrorDict);
+				var ErrorMessageArray = ErrorMessageObj['errors'];
+				for (var i=0; i < ErrorMessageArray.length; i++)
+					{
+						var ErrorMessage = ErrorMessageArray[i]['message'];
+						$(".error").append(ErrorMessage+'\n');
+		
+					}
+
+			}
+			
+		});
+	}
+
+	function pic_api_get(picid){
+		// stateobj = window.history.state;
+		// window.history.pushState(stateobj,"")
+		// console.log(window.history.state);
+
+		$.ajax({		
+			url: '/xgz9zz9l/p3/api/v1/pic/'+picid,
+			type: 'get',
+			contentType: "application/json; charset=UTF-8",
+			success: function (data) {
+				var caption = data['caption'];
+				$("#pic_{{picid}}_caption").append(caption);
+				if (document.getElementById("pic_caption_input") != null)
+					document.getElementById("pic_caption_input").value = caption;
+				var img = document.createElement("img");
+				img.src = "/static/images/"+data["picid"]+"."+data["format"];
+				// $("#content").append(caption);
+				$("#content").append(img);
+				$("#content").append('<br>');
+				var prev = data['prev'];
+				var next = data['next'];
+				if(prev){
+					var prev_a = document.getElementById('prev_pic'); //or grab it by tagname etc
+					// prev_a.href = "{{url_for('pic.pic_route', picid=prev)}}";
+					var bt = document.createElement("button");
+					bt.innerHTML='Prev Picture';
+					$("#content").append(prev_a);
+					$("#content").append(bt);
+					bt.onclick = function() {
+						stateobj = window.history.state;
+						prev_pic_url = "/xgz9zz9l/p3/pic?picid=" + prev;
+						window.history.replaceState(stateobj,"",prev_pic_url);
+						history.go();
+						// $("#content").empty();
+						// pic_api_get(prev);
+						// $(window.location).attr('href', '/xgz9zz9l/p3/pic?picid='+prev);
+					}
+				}
+				if(next){	
+					var next_a = document.getElementById('next_pic'); //or grab it by tagname etc
+					// next_a.href = "{{url_for('pic.pic_route', picid=next)}}";
+					var bt = document.createElement("button");
+					bt.innerHTML='Next Picture';
+					$("#content").append(next_a);
+					$("#content").append(bt);
+					bt.onclick = function() {
+						stateobj = window.history.state;
+						next_pic_url = "/xgz9zz9l/p3/pic?picid=" + next;
+						window.history.replaceState(stateobj,"",next_pic_url);
+						history.go();
+						// $("#content").empty();
+						// pic_api_get(next);
+						// $(window.location).attr('href', '/xgz9zz9l/p3/pic?picid='+next);
+					}
+				}
+
+				var back = document.createElement("button");
+				back.innerHTML='Back to Album';
+				$("#content").append(back);
+				back.onclick = function() {
+						
+						history.back();
+						
+						// $(window.location).attr('href', '/xgz9zz9l/p3/album?albumid='+albumid);
+						// console.log(window.history.state);
+						// var albumid = window.history.state['albumid'];
+						// console.log(albumid);
+						// $(window.location).attr('href', '/xgz9zz9l/p3/album?albumid='+albumid);
+				}
+			},
+
+			error: function(error) {
+
+				var ErrorDict = error['responseText'];
+				var ErrorMessageObj = JSON.parse(ErrorDict);
+				var ErrorMessageArray = ErrorMessageObj['errors'];
+				for (var i=0; i < ErrorMessageArray.length; i++)
+					{
+						var ErrorMessage = ErrorMessageArray[i]['message'];
+						$(".error").append(ErrorMessage+'\n');
+		
+					}
+
+			}
+			
+		});
+	}
+
+	function pic_api_put(){
+		var href = window.location.href;
+		var picid = href.split("picid=")[1];
+		var caption=document.getElementById("pic_caption_input").value;
+		var query={"picid":picid,"caption":caption};
+		$.ajax({		
+			url: '/xgz9zz9l/p3/api/v1/pic/'+picid,
+			type: 'put',
+			contentType: "application/json; charset=UTF-8",
+			data: JSON.stringify(query),
+			success: function (data) {
+				alert('put caption success');
+				history.go();
+			},
+
+			error: function(error) {
+				// alert('put caption error');
+				// console.log(JSON.stringify(error));
+				var ErrorDict = error['responseText'];
+				var ErrorMessageObj = JSON.parse(ErrorDict);
+				var ErrorMessageArray = ErrorMessageObj['errors'];
+				for (var i=0; i < ErrorMessageArray.length; i++)
+					{
+						var ErrorMessage = ErrorMessageArray[i]['message'];
+						$(".error").append(ErrorMessage+'\n');
+		
+					}
+			}
+			
+		});
+	}
+
+	function album_api(){
+		var href = window.location.href;
+		var albumid = href.split("albumid=")[1];
+		// console.log("getting pics from album_api");
+		$.ajax({		
+			url: '/xgz9zz9l/p3/api/v1/album/'+albumid,
+			type: 'get',
+			contentType: "application/json; charset=UTF-8",
+			success: function (data) {
+				// $("#content").append(JSON.stringify(data));
+				var title = data['title'];
+				var pics = data["pics"];
+				$("#content").append('title:'+title+'<br>');
+				$("#content").append('owner:'+data['username']+'<br>');
+				$("#content").append('<br>');
+				for(var i = 0; i < pics.length; i++){
+					var img = document.createElement("img");
+					img.src = "/static/images/"+pics[i]["picid"]+"."+pics[i]["format"];
+					img.length = "128";
+					img.height="128";
+					img.value=pics[i]["picid"];
+					img.onclick = function() {
+						
+						picid=this.value;
+						// $(window.location).attr('href', '/xgz9zz9l/p3/pic?picid='+picid);
+
+						pic_url = "/xgz9zz9l/p3/pic?picid=" + picid;
+						window.history.pushState({albumid:albumid},"",pic_url);
+						console.log(window.history.state);
+						history.go();
+						// $("#content").empty();
+						// pic_api_get(picid);
+
+					}
+					$("#content").append(img);
+					$("#content").append('<br>');
+					$('#content').append(pics[i]['date']+'<br>');
+					$('#content').append(pics[i]['caption']+'<br>');
+
+				}
+				
+				// $(window.location).attr('href', '/xgz9zz9l/p3/album?albumid='+albumid');
+			},
+			error: function(error) {
+
+				var ErrorDict = error['responseText'];
+				var ErrorMessageObj = JSON.parse(ErrorDict);
+				var ErrorMessageArray = ErrorMessageObj['errors'];
+				for (var i=0; i < ErrorMessageArray.length; i++)
+					{
+						var ErrorMessage = ErrorMessageArray[i]['message'];
+						$(".error").append(ErrorMessage+'\n');
+		
+					}
+			}
+			
+		});
+	}
+
+
+	$(document).ready(function(){
+		event.preventDefault();
+		var href = window.location.href;
+		var albumid = href.split("albumid=")[1];
+		if (albumid){
+			album_api();
+		}
+		var picid = href.split("picid=")[1];
+		if (picid) {
+			var href = window.location.href;
+			var picid = href.split("picid=")[1];
+			pic_api_get(picid);
+		}
+		$('#pic_caption_form').submit(function(event) {
+			event.preventDefault();
+			pic_api_put();
+		});
+		window.onpopstate = function(event) {
+			history.go();
+			// $(window.location).attr('href', '/xgz9zz9l/p3/album?albumid='+event.state.albumid);
+			// console.log(event.state)
+		}
+		
+	});
+
+	</script>
+    </head >
+
+    <div>
+		<p class="error" id='album_div_id_1'>
+		</p>
+	</div>
+
+	{% if not editpermission %}
+    <p id="pic_{{picid}}_caption">
+    </p>
+	{% endif %}
+
+	{% if editpermission %}
+	<form action="" method="POST" id='pic_caption_form'>						
+		<input type="text" name="caption" id='pic_caption_input'>
+	</form>
+	{% endif %}
+
+    <div id='content'></div>
+
+    <div>
+		<a id='prev_pic'></a>
+		<a id='next_pic'></a>
+	</div>
+
+{% endblock %}

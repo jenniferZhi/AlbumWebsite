@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+
+	<script type="text/javascript" src="/static/js/userEdit.js?v=0.2.2"></script>
+	<script type="text/javascript" src="/static/js/logout.js?v=0.1.4"></script>
+
+
+	<h1>Logged in as {{user[0]['firstname']}} {{user[0]['lastname']}}</h1>
+	<br><br>
+
+	<a href="{{url_for('main.main_route', username = username)}}"
+				id="nav_home">
+	<botton>Back to Home</botton></a><br><br>
+	<a href="{{url_for('user.user_edit_route',username = username)}}" id="nav_edit">
+		Edit Account
+	</a><br><br>
+		
+	<a href="{{url_for('albums.albums_route')}}" id = "nav_albums">
+		My Albums
+	</a><br><br>
+
+	<a href="" onclick="logout()" id = "nav_logout">
+		Log Out
+	</a><br><br><br><br>
+
+	<h1>Edit Account</h1>
+	<br>
+	<form action="" method="POST" id="useredit_form" name="edit_user">
+		<label for="update_firstname_input">New Firstname: </label><input type="text" name="firstname" id="update_firstname_input"><br>
+		<label for="update_lastname_input">New Lastname: </label><input type="text" name="lastname" id="update_lastname_input"><br>
+		<label for="update_email_input">New Email: </label><input type="text" name="email" id="update_email_input"><br>
+		<label for="update_password1_input">New Password 1: </label><input type="password" name="password1" id="update_password1_input"><br>
+		<label for="update_password2_input">New Password 2: </label><input type="password" name="password2" id="update_password2_input"><br>
+		<input type="submit" name="submit" id="new_submit">
+
+	</form>
+
+	<div id="errors_div">
+	
+	</div>
+
+
+
+
+
+{% endblock %}
